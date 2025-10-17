@@ -468,9 +468,9 @@
       "artist": "765PRO ALLSTARS",
       "work": "",
       "note": "",
-      "url": "https://www.youtube.com/watch?v=qwqVkM9vl9Y&t=6024s",
+      "url": "https://www.youtube.com/watch?v=qwqVkM9vl9Y&t=6023s",
       "videoId": "qwqVkM9vl9Y",
-      "timestamp": 6024,
+      "timestamp": 6023,
       "source": 2
     },
     {
@@ -556,9 +556,9 @@
       "artist": "戸定梨香",
       "work": "",
       "note": "",
-      "url": "https://www.youtube.com/watch?v=qwqVkM9vl9Y&t=8410s",
+      "url": "https://www.youtube.com/watch?v=qwqVkM9vl9Y&t=8409s",
       "videoId": "qwqVkM9vl9Y",
-      "timestamp": 8410,
+      "timestamp": 8409,
       "source": 2
     },
     {
@@ -4050,7 +4050,7 @@
     },
     "lQd7OfNER5E": {
       "kind": "youtube#video",
-      "etag": "KwSSRQ2xhMHqLgedSmnN-f0GKJE",
+      "etag": "UGRVhJ3FMzM48J9va8sB7vlaY_Q",
       "id": "lQd7OfNER5E",
       "snippet": {
         "publishedAt": "2024-07-04T12:00:07Z",
@@ -4124,7 +4124,7 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "2425",
+        "viewCount": "2426",
         "likeCount": "308",
         "favoriteCount": "0",
         "commentCount": "16"
@@ -4655,7 +4655,7 @@
     },
     "gZ28H27_S7I": {
       "kind": "youtube#video",
-      "etag": "79eFSCgsfTJk5R1-EgOpwI9d2oo",
+      "etag": "44z_cvldPrcrLVbkirRNmoV5wOw",
       "id": "gZ28H27_S7I",
       "snippet": {
         "publishedAt": "2023-04-01T11:15:07Z",
@@ -4710,7 +4710,7 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "39315",
+        "viewCount": "39322",
         "likeCount": "466",
         "favoriteCount": "0",
         "commentCount": "41"
@@ -5283,7 +5283,7 @@
     },
     "UAMhYU9SHzo": {
       "kind": "youtube#video",
-      "etag": "Ifz12W_yEFlzpVDcg1J2AlZ4nU8",
+      "etag": "rvqDqgqEoXJ58M1RjZ-NpQgJOac",
       "id": "UAMhYU9SHzo",
       "snippet": {
         "publishedAt": "2022-04-22T03:00:11Z",
@@ -5337,7 +5337,7 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "266713",
+        "viewCount": "266718",
         "favoriteCount": "0",
         "commentCount": "372"
       }
@@ -5692,7 +5692,7 @@
     },
     "w9xYUVXxsYM": {
       "kind": "youtube#video",
-      "etag": "JM_gfF9u1u0wVsEQpVW_C6RkRJg",
+      "etag": "NvAX-ICOzPcFS9dhVzo9cocvYS4",
       "id": "w9xYUVXxsYM",
       "snippet": {
         "publishedAt": "2021-12-17T11:00:13Z",
@@ -5752,7 +5752,7 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "22082",
+        "viewCount": "22083",
         "likeCount": "752",
         "favoriteCount": "0",
         "commentCount": "59"
@@ -6107,7 +6107,7 @@
     },
     "c421y_seuJ0": {
       "kind": "youtube#video",
-      "etag": "gaTpH5_ueUDygE2LWXgKNLc8_p4",
+      "etag": "3rhf6_8wfqKuq4YfVUbrOswZ1q4",
       "id": "c421y_seuJ0",
       "snippet": {
         "publishedAt": "2020-11-06T20:23:53Z",
@@ -6181,7 +6181,7 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "6539",
+        "viewCount": "6540",
         "likeCount": "157",
         "favoriteCount": "0",
         "commentCount": "8"
@@ -6752,7 +6752,7 @@
     },
     "qwqVkM9vl9Y": {
       "kind": "youtube#video",
-      "etag": "ZIyrjzeTSThY0UXb84-MNsCDI5s",
+      "etag": "vNExRM7YFqi4sC39bNpV0zT8xk0",
       "id": "qwqVkM9vl9Y",
       "snippet": {
         "publishedAt": "2025-10-17T14:31:38Z",
@@ -6834,8 +6834,8 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "320",
-        "likeCount": "66",
+        "viewCount": "340",
+        "likeCount": "65",
         "favoriteCount": "0",
         "commentCount": "0"
       }
@@ -7379,7 +7379,7 @@
     },
     "Ov0uQA-ux0c": {
       "kind": "youtube#video",
-      "etag": "aS5iG1nxVvb-PsQ-zNp2PjKuC-Y",
+      "etag": "JcvI2Gih_eDIALA2b8_VcPyEvyY",
       "id": "Ov0uQA-ux0c",
       "snippet": {
         "publishedAt": "2025-04-15T01:52:44Z",
@@ -7452,7 +7452,7 @@
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "9986",
+        "viewCount": "9995",
         "likeCount": "320",
         "favoriteCount": "0",
         "commentCount": "14"
