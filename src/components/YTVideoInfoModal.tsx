@@ -1,7 +1,8 @@
+import {formatDateYmd}              from "@/lib/dateFormat";
 import {formatDuration}             from "@/lib/youTube";
-import {YouTubeVideo}         from "@/types";
+import {YouTubeVideo}               from "@/types";
 import React, { useRef, useEffect } from "react";
-import { X } from "lucide-react"; // アイコンをインポート
+import { X }                        from "lucide-react"; // アイコンをインポート
 
 /**
  * 動画情報モーダル
@@ -28,7 +29,9 @@ const YTVideoInfoModal: React.FC<{
   }, [onClose]);
 
   const durationText = formatDuration(video?.contentDetails.duration);
-  const publishedDate = new Date(video?.snippet.publishedAt).toLocaleDateString('ja-JP');
+  const publishedDate = video?.snippet.publishedAt
+    ? formatDateYmd(video.snippet.publishedAt)
+    : "";
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
@@ -66,7 +69,14 @@ const YTVideoInfoModal: React.FC<{
             <tr>
               <td colSpan={2} className="py-2 text-gray-900 dark:text-gray-100 align-top">
                 <div className="text-lg font-semibold mt-2 mb-1">概要</div>
-                <div className="overscroll-x-none max-h-32 overflow-y-auto whitespace-pre-wrap text-sm border p-2 rounded-md bg-gray-50 dark:bg-gray-700">
+                <div className="
+                  max-h-32
+                  overflow-y-auto
+                  overflow-x-hidden   /* 横方向にはみ出した分は隠す */
+                  whitespace-pre-wrap /* 改行維持＋通常の折り返し */
+                  break-all         /* 長いURLなども途中で折り返す */
+                  text-sm border p-2 rounded-md
+                  bg-gray-50 dark:bg-gray-700">
                   {video?.snippet.description}
                 </div>
               </td>
