@@ -4,10 +4,10 @@ import Menu                           from "@/components/Menu";
 import VideoCard                      from "@/components/VideoCard";
 import {checkVersionAndUpdateCache}   from "@/lib/versionChecker";
 import {Song, SongInfo, YouTubeVideo} from "@/types";
-import {useSearchParams}              from "next/navigation";
-import { useEffect, useState }        from "react";
-import Papa                           from "papaparse";
 import Image                          from "next/image";
+import {useSearchParams}              from "next/navigation";
+import Papa                           from "papaparse";
+import {useEffect, useState}          from "react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -60,7 +60,7 @@ export default function Home() {
       try {
         const res = await fetch(`${basePath}/songinfo.csv`);
         const csvText = await res.text();
-        const { data }: { data: SongInfo[] } = Papa.parse(csvText, {
+        const {data}: { data: SongInfo[] } = Papa.parse(csvText, {
           header: true,
           skipEmptyLines: true,
         });
@@ -196,19 +196,19 @@ export default function Home() {
           {/* タイトル（スクロール時に消える） */}
           {/* タイトルエリア（タイトルとメニューアイコンを横並びに） */}
           <div className={`flex items-center justify-between w-full px-4 pt-2  ${
-              isScrolled ? "opacity-0 h-0" : "opacity-100 h-auto"
-            }`}>
+            isScrolled ? "opacity-0 h-0" : "opacity-100 h-auto"
+          }`}>
             <h1 className="text-2xl md:text-4xl font-bold whitespace-nowrap">
               戸定梨香ちゃんの歌リスト
             </h1>
             {/* メニューアイコン */}
-            <Menu menuOpen={menuOpen} onClick={() => setMenuOpen(!menuOpen)} />
+            <Menu menuOpen={menuOpen} onClick={() => setMenuOpen(!menuOpen)}/>
           </div>
 
           <div className="max-w-4xl mx-auto flex items-center w-full z-[998] p-0">
             {/*左上のアイコン */}
             <div className="mr-2 h-full p-1 cursor-pointer" onClick={handleResetSearch}>
-              <Image width={192} height={192} src={`${basePath}/icon-192x192.png`} alt="Logo" className="w-12 h-12" />
+              <Image width={192} height={192} src={`${basePath}/icon-192x192.png`} alt="Logo" className="w-12 h-12"/>
             </div>
 
             {/* 検索バー（中央配置） */}
@@ -239,12 +239,13 @@ export default function Home() {
                   href={searchQuery
                     ? `https://www.addtoany.com/add_to/x?linkurl=${encodeURIComponent(linkUrl)}&linkname=${linkNote}`
                     : `https://www.addtoany.com/add_to/x?linkurl=${encodeURIComponent(currentUrl)}&linkname=${linkNote2}`
-                }
+                  }
 
                   target="_blank"
                 >
-                  <img src="https://static.addtoany.com/buttons/x.svg" width="32" height="32"
-                       style={{backgroundColor: "royalblue"}}/>
+                  <Image src="https://static.addtoany.com/buttons/x.svg" width={32} height={32}
+                         alt="X"
+                         style={{backgroundColor: "royalblue"}}/>
                 </a>
               </div>
             </div>
@@ -265,13 +266,13 @@ export default function Home() {
                       key={videoId} videoData={videos[videoId]} songs={songs}
                       handleGenreClick={handleGenreClick}
                       handleTextSearch={handleTextSearch}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        ))
-      }
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          ))
+        }
       </div>
     </main>
   );
