@@ -1,13 +1,16 @@
 "use client";
 
+import {ImageLogo}                    from "@/components/ImageLogo";
+import {ImageX}                       from "@/components/ImageX";
 import Menu                           from "@/components/Menu";
-import VideoCard                      from "@/components/VideoCard";
+import {SessionVideos}                from "@/components/SessionVideos";
+import {filterSongs, linkUrl}         from "@/lib/constants";
 import {checkVersionAndUpdateCache}   from "@/lib/versionChecker";
 import {Song, SongInfo, YouTubeVideo} from "@/types";
-import Image                          from "next/image";
-import {useSearchParams}              from "next/navigation";
-import Papa                           from "papaparse";
-import {useEffect, useState}          from "react";
+
+import {useSearchParams}     from "next/navigation";
+import Papa                  from "papaparse";
+import {useEffect, useState} from "react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -137,56 +140,9 @@ export default function Home() {
     };
   }, [menuOpen]);
 
-  const filteredSongs = songs.filter((song) => {
-    const videoData = videos[song.videoId];
-
-    // 🔹「#」で始まる場合はジャンル & opEd の完全一致検索
-    if (searchQuery.startsWith("#")) {
-      const query = searchQuery.slice(1).toLowerCase(); // 先頭の「#」を削除
-      return (
-        (song.info?.genre?.toLowerCase() === query) || // ✅ ジャンル完全一致
-        (song.info?.opEd?.toLowerCase() === query)     // ✅ opEd完全一致
-      );
-    }
-
-    // 🔹それ以外の場合は通常の部分一致検索
-    return (
-      song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||  // 曲名検索
-      song.date.includes(searchQuery) ||  // 日付検索
-      song.info?.work?.toLowerCase().includes(searchQuery.toLowerCase()) ||  // 作品名
-      song.artist?.toLowerCase().includes(searchQuery.toLowerCase()) ||  // アーティスト
-      song.info?.lyricist?.toLowerCase().includes(searchQuery.toLowerCase()) ||  // 注釈
-      song.info?.composer?.toLowerCase().includes(searchQuery.toLowerCase()) ||  // 作曲
-      song.info?.arranger?.toLowerCase().includes(searchQuery.toLowerCase()) ||  // 編曲
-      song.note.toLowerCase().includes(searchQuery.toLowerCase()) ||  // 注釈
-      (videoData?.snippet?.title?.toLowerCase() || "").includes(searchQuery.toLowerCase()) // 動画タイトル検索
-    );
-  });
-
-  // ✅ 日付ごとにグループ化（videoIdごと）
-  const groupedSongs: Record<string, Record<string, Song[]>> = {};
-  filteredSongs.forEach((song) => {
-    if (!groupedSongs[song.date]) {
-      groupedSongs[song.date] = {};
-    }
-    if (!groupedSongs[song.date][song.videoId]) {
-      groupedSongs[song.date][song.videoId] = [];
-    }
-    groupedSongs[song.date][song.videoId].push(song);
-  });
-
   if (!isClient) {
     return <div>Loading...</div>; // SSR時に一旦「Loading...」を表示
   }
-  const encodedQuery = encodeURIComponent(searchQuery);
-  const currentUrl = "https://katsu1101.github.io/song-list-linca-tojou";
-  const linkUrl = `${currentUrl}/?s=${encodedQuery}`
-  const linkNote = encodeURIComponent(`#戸定梨香ちゃんの歌リスト の検索結果
-キーワード: ${searchQuery}
-
-#戸定梨香 #とじょりん \n　\n　`);
-  const linkNote2 = encodeURIComponent(`#戸定梨香ちゃんの歌リスト
-#戸定梨香 #とじょりん \n　\n　`);
 
   return (
     <main className="max-w-4xl mx-auto p-4 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900">
@@ -208,7 +164,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto flex items-center w-full z-[998] p-0">
             {/*左上のアイコン */}
             <div className="mr-2 h-full p-1 cursor-pointer" onClick={handleResetSearch}>
-              <Image width={192} height={192} src={`${basePath}/icon-192x192.png`} alt="Logo" className="w-12 h-12"/>
+              <ImageLogo/>
             </div>
 
             {/* 検索バー（中央配置） */}
@@ -235,45 +191,20 @@ export default function Home() {
             <div>
               {/* AddToAny のシェアボタンコンテナ */}
               <div title="検索結果をXでポスト！">
-                <a
-                  href={searchQuery
-                    ? `https://www.addtoany.com/add_to/x?linkurl=${encodeURIComponent(linkUrl)}&linkname=${linkNote}`
-                    : `https://www.addtoany.com/add_to/x?linkurl=${encodeURIComponent(currentUrl)}&linkname=${linkNote2}`
-                  }
-
-                  target="_blank"
-                >
-                  <Image src="https://static.addtoany.com/buttons/x.svg" width={32} height={32}
-                         alt="X"
-                         style={{backgroundColor: "royalblue"}}/>
+                <a  href={linkUrl(searchQuery)} target="_blank">
+                  <ImageX/>
                 </a>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div className="mt-24">
-        {Object.entries(groupedSongs).length == 0
-          ? <p className="text-center text-gray-500">検索結果がありません</p>
-          : Object.entries(groupedSongs).map(([date, videosByDate]) => (
-            <section key={date} className="mb-8">
-              <h2 className="text-2xl font-semibold border-b-2 pb-2">{date}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                {Object.entries(videosByDate).map(([videoId, songs]) => {
-                  return (
-                    <VideoCard
-                      key={videoId} videoData={videos[videoId]} songs={songs}
-                      handleGenreClick={handleGenreClick}
-                      handleTextSearch={handleTextSearch}
-                    />
-                  );
-                })}
-              </div>
-            </section>
-          ))
-        }
-      </div>
+      <SessionVideos
+        filteredSongs={filterSongs(songs, videos, searchQuery)}
+        videos={videos}
+        handleTextSearch={handleTextSearch}
+        handleGenreClick={handleGenreClick}
+      />
     </main>
   );
 }
