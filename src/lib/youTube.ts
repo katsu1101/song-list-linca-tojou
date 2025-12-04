@@ -1,4 +1,5 @@
 export function formatDuration(isoDuration: string): string {
+  if (!isoDuration) return "";
   // ISO8601形式の "PT#H#M#S" を正規表現で抽出
   const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
   const matches = isoDuration.match(regex);

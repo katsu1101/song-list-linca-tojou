@@ -1,14 +1,16 @@
 import {formatDuration}             from "@/lib/youTube";
 import {YouTubeVideo}         from "@/types";
-import Image                        from "next/image";
 import React, { useRef, useEffect } from "react";
+import { X } from "lucide-react"; // アイコンをインポート
 
-type Props = {
+/**
+ * 動画情報モーダル
+ */
+const YTVideoInfoModal: React.FC<{
   video: YouTubeVideo;
-  onClose: () => void
-  onTextSearch: (q: string) => void
-}
-const YTVideoInfoModal: React.FC<Props> = ({ video, onClose }) => {
+  onClose: () => void;
+  onTextSearch: (q: string) => void;
+}> = ({ video, onClose, onTextSearch }) => {
   const infoRef = useRef<HTMLDivElement>(null);
 
   // クリック外で閉じる
@@ -19,127 +21,91 @@ const YTVideoInfoModal: React.FC<Props> = ({ video, onClose }) => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [onClose]);
 
+  const durationText = formatDuration(video?.contentDetails.duration);
+  const publishedDate = new Date(video?.snippet.publishedAt).toLocaleDateString('ja-JP');
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div ref={infoRef} className="bg-white dark:bg-gray-800 p-6 rounded-md shadow-lg w-[24rem] md:w-[48rem]">
-        <div className="relative group w-[22rem] md:w-[44rem]">
-          <h2
-            className="
-              text-lg
-              font-semibold
-              text-gray-900
-              dark:text-gray-100
-              mb-4
-              truncate
-            "
-          >
-            {video.snippet.title}
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+      <div
+        ref={infoRef}
+        className="overscroll-x-none bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-100"
+      >
+        <div className="relative">
+          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white border-b pb-2 flex justify-between items-center">
+            動画の詳細情報
+            <button onClick={onClose} className="text-gray-500 hover:text-red-500">
+              <X size={24} />
+            </button>
           </h2>
-          <div className="absolute left-0 top-full mt-1 hidden group-hover:block z-10 bg-gray-800 text-white text-sm p-2 rounded shadow-lg whitespace-normal">
-            {video.snippet.title}
+
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+              {video?.snippet.title}
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              チャンネル: {video?.snippet.title}
+            </p>
           </div>
+
+          <table className="w-full text-left text-sm mb-4">
+            <tbody>
+            <tr className="border-b border-gray-300 dark:border-gray-600">
+              <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300 w-1/4">投稿日</td>
+              <td className="py-2 text-gray-900 dark:text-gray-100 w-3/4">{publishedDate}</td>
+            </tr>
+            <tr className="border-b border-gray-300 dark:border-gray-600">
+              <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300">動画時間</td>
+              <td className="py-2 text-gray-900 dark:text-gray-100">{durationText}</td>
+            </tr>
+            <tr>
+              <td colSpan={2} className="py-2 text-gray-900 dark:text-gray-100 align-top">
+                <div className="text-lg font-semibold mt-2 mb-1">概要</div>
+                <div className="overscroll-x-none max-h-32 overflow-y-auto whitespace-pre-wrap text-sm border p-2 rounded-md bg-gray-50 dark:bg-gray-700">
+                  {video?.snippet.description}
+                </div>
+              </td>
+            </tr>
+            {video?.snippet.tags && video?.snippet.tags.length > 0 && (
+              <tr>
+                <td colSpan={2} className="py-2 text-gray-900 dark:text-gray-100 align-top">
+                  <div className="text-lg font-semibold mt-2 mb-1">タグ</div>
+                  <div className="text-xs max-h-32 overflow-y-auto whitespace-pre-wrap flex flex-wrap gap-2 pr-2">
+                    {video?.snippet.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                        onClick={() => {
+                          onTextSearch(tag);
+                          onClose();
+                        }}
+                      >
+                          {tag}
+                        </span>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            )}
+            </tbody>
+          </table>
+
+          <button
+            className="mt-4 w-full px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none transition-colors"
+            onClick={onClose}
+          >
+            閉じる
+          </button>
         </div>
-
-
-        <table>
-          <tbody>
-          <tr>
-            <td className="w-[18rem] md:w-[28rem]">
-              <a
-                href={`https://www.youtube.com/watch?v=${video.id}&t=0s`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <Image
-                  src={video?.snippet?.thumbnails?.high?.url || `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                  alt={video?.snippet?.title || ""}
-                  className="object-cover rounded-md w-[16rem] md:w-[30rem]"
-                  style={{ height: "16rem" }} // h-48(12rem) or h-32(8rem)
-                  width={480}
-                  height={360}
-                  loading="lazy"
-                />
-              </a>
-            </td>
-            <td rowSpan={2} className="align-top">
-              {/* 詳細情報テーブル */}
-              <table className="w-full border-collapse">
-                <tbody>
-                  <tr className="border-b border-gray-300 dark:border-gray-600">
-                    <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300">
-                      再生時間
-                    </td>
-                    <td className="py-2 text-nowrap text-gray-900 dark:text-gray-100">
-                      {formatDuration(video.contentDetails.duration)}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-300 dark:border-gray-600">
-                    <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300">
-                      再生回数
-                    </td>
-                    <td className="py-2 text-gray-900 dark:text-gray-100">
-                      {video.statistics.viewCount}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-300 dark:border-gray-600">
-                    <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300">
-                      高評価
-                    </td>
-                    <td className="py-2 text-gray-900 dark:text-gray-100">
-                      {video.statistics.likeCount}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-300 dark:border-gray-600">
-                    <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300">
-                      コメント数
-                    </td>
-                    <td className="py-2 text-gray-900 dark:text-gray-100">
-                      {video.statistics.commentCount}
-                    </td>
-                  </tr>
-                  {video.snippet.tags && (<tr>
-                    <td colSpan={2} className="py-2 text-gray-900 dark:text-gray-100 align-top">
-                      {/* スクロール領域 */}
-                      <div className="text-xs max-h-48 overflow-y-auto whitespace-pre-wrap flex flex-wrap gap-2 pr-2">
-                        <div className="text-lg font-semibold">タグ</div>
-                        {video.snippet.tags.map((tag) => (
-                          <span key={tag} className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>)}
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td className="py-2 text-gray-900 dark:text-gray-100 align-top">
-              <div className="max-h-32 w-[12rem] md:w-[28rem] overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-                {video.snippet.description}
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        {/* 閉じるボタン */}
-        <button
-          className="mt-4 w-full px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none"
-          onClick={onClose}
-        >
-          ✖ 閉じる
-        </button>
       </div>
     </div>
   );
 };
+
 
 export default YTVideoInfoModal;

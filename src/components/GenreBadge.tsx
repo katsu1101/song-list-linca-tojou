@@ -2,6 +2,7 @@
 
 import {getGenreColors} from "@/lib/genreColors";
 import {Genre}          from "@/types";
+import React            from "react";
 
 type Props = {
   genre?: Genre;

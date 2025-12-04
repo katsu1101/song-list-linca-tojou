@@ -1,3 +1,7 @@
+
+/**
+ * 歌データ
+ */
 export type Song = {
   artist?: string // アーティスト
   info?: SongInfo;      // 追加情報
@@ -12,9 +16,24 @@ export type Song = {
 };
 export type SongsList = Song[];
 
+/**
+ * ジャンルの型定義
+ * NOTE: 実際のアプリケーションでは、より柔軟な型を使うか、サーバーから取得することを検討
+ */
 export type Genre =
-  'オリジナル' | 'J-POP' | 'ドラえもん' | 'アニソン' | 'ボカロ' | 'ディズニー' | 'クリスマス' | 'ガンダム' | '市民の歌';
+  | "オリジナル"
+  | "J-POP"
+  | "ドラえもん"
+  | "アニソン"
+  | "ボカロ"
+  | "ディズニー"
+  | "クリスマス"
+  | "ガンダム"
+  | "市民の歌";
 
+/**
+ * 曲情報
+ */
 export type SongInfo = {
   title: string;       // 曲名
   release?: string;    // リリース日
@@ -27,10 +46,13 @@ export type SongInfo = {
   opEd?: string;       // OP/ED区分
 };
 
-// YouTube API のレスポンスデータの型
+/**
+ * YouTube API のレスポンスデータの型 (簡略化)
+ */
 export interface YouTubeVideo {
   id: string;
   snippet: {
+    publishedAt: string;
     title: string;
     description: string;
     tags: string[];

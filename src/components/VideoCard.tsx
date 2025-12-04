@@ -3,123 +3,150 @@ import OpEdBadge                            from "@/components/OpEdBadge";
 import SongInfoModal from "@/components/SongInfoModal";
 import YTVideoInfoModal from "@/components/YTVideoInfoModal";
 import { Song, YouTubeVideo}          from "@/types";
+import {Info} from "lucide-react";
 import React, {useEffect, useRef, useState} from "react";
-import Image from "next/image"
+import Image from "next/image";
 
-type Props = {
+
+/**
+ * 動画カード
+ */
+const VideoCard: React.FC<{
   videoData: YouTubeVideo;
   songs: Song[];
-  handleGenreClick: (tag: string) => void; // ✅ クリック時にジャンルを渡せる
-  handleTextSearch: (q: string) => void; // ✅ クリック時に検索文字列を渡せる
-};
+  handleGenreClick: (tag: string) => void;
+  handleTextSearch: (q: string) => void;
+}> = ({ videoData, songs, handleGenreClick, handleTextSearch }) => {
 
-const VideoCard: React.FC<Props> = ({ videoData, songs, handleGenreClick, handleTextSearch }) => {
   const [openInfo, setOpenInfo] = useState<string | null>(null);
+  const [openVideoInfo, setOpenVideoInfo] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
 
-  // YouTubeVideoInfoModal 用の状態
-  const [openVideoInfo, setOpenVideoInfo] = useState(false);
-
-  // クリック外で閉じる処理
+  // クリック外で閉じる処理をSongInfoModalとVideoCardに集約
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (infoRef.current && !infoRef.current.contains(event.target as Node)) {
         setOpenInfo(null);
-        setOpenVideoInfo(false)
+        setOpenVideoInfo(false);
       }
     };
-    if (openInfo) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openInfo]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-  if (!videoData) return <></>;
+  if (!videoData) return null;
 
-  const isSingingVideo = songs[0]?.source === 1;
+  // 動画が「歌ってみた」動画かどうかを判断 (source: 1 は歌ってみた動画)
+  const isSingingVideo = songs.some(song => song.source === 1);
+
+  const thumbnailUrl = videoData?.snippet?.thumbnails?.medium.url;
+  const videoTitle = videoData?.snippet.title;
 
   return (
     <div
-      className={`p-4 border rounded-lg shadow-md transition-transform duration-300 
-        ${isSingingVideo ? "bg-gray-300 dark:bg-gray-700" : "bg-blue-100 dark:bg-blue-900 border-blue-500"}`}
+      ref={infoRef}
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 flex flex-col md:flex-row gap-4"
     >
-      <a
-        href={`https://www.youtube.com/watch?v=${videoData.id}&t=0s`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block"
-      >
-        <Image
-          src={videoData?.snippet?.thumbnails?.high?.url || `https://img.youtube.com/vi/${videoData.id}/hqdefault.jpg`}
-          alt={videoData?.snippet?.title || songs[0]?.title}
-          className="w-full object-cover rounded-md"
-          style={{ height: "14rem" }} // h-48(12rem) or h-32(8rem)
-          width={960}
-          height={720}
-          loading="lazy"
-        />
-      </a>
+      <div className="w-full flex-shrink-0">
+        <a
+          href={`https://www.youtube.com/watch?v=${videoData?.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-lg overflow-hidden group"
+        >
+          {thumbnailUrl ? <Image
+            src={thumbnailUrl}
+            alt={videoTitle}
+            width={320}
+            height={180}
+            className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+            // loading="lazy"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = `https://placehold.co/320x180/6b7280/ffffff?text=No+Image`;
+            }}
+            priority
+          /> : <></>}
 
-      {/* 🎥 動画タイトルの表示 */}
-      {videoData?.snippet?.title && (
-        <p className="mt-2 font-semibold text-lg text-gray-900 dark:text-gray-100">
-          {/* YouTubeVideoInfoModal を開くボタン */}
+          {/*<div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">*/}
+          {/*  <span className="text-white text-3xl opacity-80">▶</span>*/}
+          {/*</div>*/}
+          {/*<div className="absolute bottom-1 right-1 bg-black bg-opacity-70 text-white text-xs px-1.5 py-0.5 rounded">*/}
+          {/*  {formatDuration(videoData?.contentDetails.duration)}*/}
+          {/*</div>*/}
+        </a>
+      {/*</div>*/}
+
+      {/*<div className="flex-grow md:w-2/3">*/}
+        <div className="flex justify-between items-start mb-2">
+          <a
+            href={`https://www.youtube.com/watch?v=${videoData?.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 line-clamp-2 transition-colors"
+            title={videoTitle}
+          >
+            {videoTitle}
+          </a>
           <button
             onClick={() => setOpenVideoInfo(true)}
-            className="ml-2 px-2 pl-0 py-1 text-sm text-white rounded-md hover:bg-blue-700 focus:outline-none"
+            className="ml-2 p-1 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+            title="動画情報を表示"
           >
-            ✅
+            <Info size={20} />
           </button>
-          {videoData.snippet.title}
-        </p>
-      )}
-      {/* YTVideoInfoModal の表示 */}
-      {openVideoInfo && (
-        <YTVideoInfoModal
-          video={videoData}
-          onClose={() => setOpenVideoInfo(false)}
-          onTextSearch={handleTextSearch}
-        />
-      )}
+        </div>
 
-      {/* 曲情報の表示 */}
-      <div className="mt-2">
-        <ul className={isSingingVideo ? "" : "space-y-2"}>
+        <ul className="space-y-2">
           {songs.map((song, index) => (
             <li
               key={song.timestamp || index}
-              className={`text-lg space-x-2 ${!isSingingVideo ? "border-t border-gray-400 pt-2" : ""}`}
+              className={`text-base space-x-2 ${!isSingingVideo && index > 0 ? "border-t border-gray-200 dark:border-gray-700 pt-2" : ""}`}
             >
-              <span className="flex-nowrap items-start">
-                {/* ℹ️ Info ボタン */}
+              <span className="flex items-center flex-wrap">
+                {/* Info ボタン */}
                 <button
-                  className="ml-2 px-2 pl-0 py-1 text-sm text-white rounded-md hover:bg-blue-700 focus:outline-none"
+                  className="mr-1 px-1 py-0.5 text-sm text-blue-600 dark:text-blue-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition-colors"
                   onClick={() => setOpenInfo(openInfo === song.title ? null : song.title)}
+                  title="曲情報を表示"
                 >
-                  ℹ️
+                  <Info size={18} />
                 </button>
                 <a
                   href={`https://www.youtube.com/watch?v=${song.videoId}${song.timestamp ? `&t=${song.timestamp}s` : ""}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline hover:text-blue-500"
+                  className="font-medium text-gray-800 dark:text-gray-200 hover:underline hover:text-blue-500 dark:hover:text-blue-300 mr-2"
                 >
                   {song.title}
                 </a>
 
                 <GenreBadge genre={song.info?.genre} onClick={handleGenreClick} />
                 <OpEdBadge opEd={song.info?.opEd || ""} onClick={handleGenreClick} />
+
+                {/*{songCountBadge} /!* 歌数バッジをここに配置 *!/*/}
               </span>
 
               {/* 歌の詳細情報（モーダル風） */}
               {openInfo === song.title && (
-                <SongInfoModal song={song} onClose={() => setOpenInfo(null)} onTextSearch={handleTextSearch} />
+                <SongInfoModal
+                  song={song}
+                  onClose={() => setOpenInfo(null)}
+                  onTextSearch={handleTextSearch}
+                />
               )}
             </li>
           ))}
         </ul>
+
+        {/* 動画情報モーダル */}
+        {openVideoInfo && (
+          <YTVideoInfoModal
+            video={videoData}
+            onClose={() => setOpenVideoInfo(false)}
+            onTextSearch={handleTextSearch}
+          />
+        )}
       </div>
     </div>
   );

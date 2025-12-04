@@ -1,6 +1,7 @@
 // components/GenreBadge.tsx
 
 import {getOpEdColors} from "@/lib/opEdColors";
+import React           from "react";
 
 type Props = {
   opEd: string;
@@ -18,7 +19,7 @@ const OpEdBadge: React.FC<Props> = ({ opEd, onClick, onClose }) => {
   return (
     <span
       className="ml-3 px-2 py-0.5 text-xs rounded-md font-bold leading-none inline-flex
-        items-start cursor-pointer whitespace-nowrap"
+        items-start cursor-pointer whitespace-nowrap transition-all duration-150 hover:opacity-80"
       style={{
         backgroundColor: genreStyles?.background,
         color: genreStyles?.color,
