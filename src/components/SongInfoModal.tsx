@@ -50,6 +50,11 @@ const SongInfoModal: React.FC<{
         <table className="w-full text-left text-sm">
           <tbody>
           <tr className="border-b border-gray-300 dark:border-gray-600">
+            <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300 w-1/4">アーティスト</td>
+            <td className="py-2 text-gray-900 dark:text-gray-100 font-bold w-3/4">{song.artist}</td>
+          </tr>
+
+          <tr className="border-b border-gray-300 dark:border-gray-600">
             <td className="text-nowrap py-2 pr-4 font-semibold text-gray-700 dark:text-gray-300 w-1/4">曲名</td>
             <td className="py-2 text-gray-900 dark:text-gray-100 font-bold w-3/4">{song.title}</td>
           </tr>

@@ -58,7 +58,8 @@ export async function scrapeSongList(url: string, source: number) {
         return
       }
 
-      if (node.childNodes.length === 1) {
+      if (node.childNodes.length === 1 &&
+        (node.childNodes[0] as Element).textContent?.trim() !== "") {
         // 日付
         currentDate = (node.childNodes[0] as Element).textContent?.trim() || "";
         return
