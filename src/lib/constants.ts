@@ -5,12 +5,10 @@ import {Song, YouTubeVideo} from "@/types";
  */
 const context = {
   currentUrl: "https://katsu1101.github.io/song-list-linca-tojou",
-  xlinkUrl: "https://www.addtoany.com/add_to/x?linkurl=",
-  linkNote: `#戸定梨香ちゃんの歌リスト の検索結果
-キーワード: `,
-  linkNote2: `#戸定梨香ちゃんの歌リスト
-#戸定梨香 #とじょりん \n　\n　`,
-  linkNote3: `\n#戸定梨香 #とじょりん \n　\n　`
+  xShareBaseUrl: "https://www.addtoany.com/add_to/x",
+  linkNote: `#戸定梨香ちゃんの歌リスト の検索結果\nキーワード: `,
+  linkNote2: `#戸定梨香ちゃんの歌リスト`,
+  tagSuffix: `\n#戸定梨香 #とじょりん \n　\n　`,
 }
 
 /**
@@ -18,24 +16,34 @@ const context = {
  *
  * この関数は、検索クエリと関連するコンテキスト情報をエンコードして URL を構築する、
  * ベースURLに追加します。検索クエリが提供されているかどうかによって、出力は異なる。
+ * - linkurl: 純粋なURLのみ（タグは入れない）
+ * - linkname: 投稿本文（タグはここ）
  *
  * param {string} searchQuery - 生成されるURLに含める検索クエリ。空の場合はデフォルトのURLが返されます。
  * returns {string} - searchQueryとコンテキストデータに基づいて完全に構築され、エンコードされたURL。
  */
-export const linkUrl = (
-  searchQuery: string,
-) => {
+export const linkUrl = (searchQuery: string) => {
+  const normalizedQuery = searchQuery.trim();
 
-  const linkUrl = `${context.currentUrl}/?s=${encodeURIComponent(searchQuery)}
-    ${context.linkNote3}`
-  const linkNote = encodeURIComponent(`${context.linkNote}${searchQuery}
-    ${context.linkNote3}`);
-  const linkNote2 = encodeURIComponent(`${context.linkNote2}`);
+  // 共有する「URL」はURLとして正しい形だけにする
+  const targetUrl = new URL(context.currentUrl);
+  if (normalizedQuery !== "") {
+    targetUrl.searchParams.set("s", normalizedQuery);
+  }
 
-  return searchQuery
-    ? `${context.xlinkUrl}${encodeURIComponent(linkUrl)}&linkname=${linkNote}`
-    : `${context.xlinkUrl}${encodeURIComponent(context.currentUrl)}&linkname=${linkNote2}`
-}
+  // 共有する「本文」はここだけに寄せる
+  const tweetText =
+    normalizedQuery !== ""
+      ? `${context.linkNote}${normalizedQuery}${context.tagSuffix}`
+      : `${context.linkNote2}${context.tagSuffix}`;
+
+  // AddToAny共有URLを正しく組み立てる（エンコードはURLSearchParamsに任せる）
+  const shareUrl = new URL(context.xShareBaseUrl);
+  shareUrl.searchParams.set("linkurl", targetUrl.toString());
+  shareUrl.searchParams.set("linkname", tweetText);
+
+  return shareUrl.toString();
+};
 
 /**
  * 完全一致と部分一致をサポートする検索クエリに基づいて曲のリストをフィルタリングします。
