@@ -1,0 +1,41 @@
+1:"$Sreact.fragment"
+2:"$Sreact.suspense"
+3:I[7486,[],""]
+4:I[9108,[],""]
+8:I[7999,[],"ClientPageRoot"]
+9:"static/chunks/327-e9b9d8175e3d626c.js"
+a:"static/chunks/app/page-8e5eb8c4d4599f3f.js"
+b:I[9241,["327","$9","974","$a"],"default"]
+e:I[7047,[],"OutletBoundary"]
+11:"ViewportBoundary"
+12:I[7047,[],"$11"]
+13:"MetadataBoundary"
+14:I[7047,[],"$13"]
+:HL["/song-list-linca-tojou/_next/static/css/fc664e9377fa0d30.css","style"]
+6:X
+7:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","$L8",null,{"Component":"$b","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@c","$@d"]}}],null,["$","$Le",null,{"children":["$","$2",null,{"name":"Next.MetadataOutlet","children":"$@f"}]}]]}],"p":"$@10","v":null,"s":"$6"}}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/song-list-linca-tojou/_next/static/css/fc664e9377fa0d30.css","precedence":"next"}]],["$","html",null,{"lang":"ja","children":[["$","head",null,{"children":[["$","meta",null,{"charSet":"UTF-8"}],["$","script",null,{"defer":true,"src":"https://static.addtoany.com/menu/page.js"}],["$","meta",null,{"name":"apple-mobile-web-app-capable","content":"yes"}],["$","meta",null,{"name":"apple-mobile-web-app-status-bar-style","content":"black-translucent"}],["$","meta",null,{"name":"apple-mobile-web-app-title","content":"戸定梨香ちゃんの歌リスト"}],["$","meta",null,{"name":"mobile-web-app-capable","content":"yes"}],["$","meta",null,{"name":"theme-color","content":"#FF0000"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/song-list-linca-tojou/linca/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/song-list-linca-tojou/linca/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/song-list-linca-tojou/linca/manifest.json"}],["$","meta",null,{"property":"og:site_name","content":"戸定梨香ちゃんの歌リスト"}],["$","meta",null,{"property":"og:locale","content":"ja_JP"}],["$","link",null,{"rel":"canonical","href":"https://katsu1101.github.io/song-list-linca-tojou/"}],["$","link",null,{"rel":"apple-touch-startup-image","href":"/song-list-linca-tojou/linca/apple-touch-icon.png"}],["$","link",null,{"rel":"shortcut icon","href":"/song-list-linca-tojou/linca/android-chrome-192x192.png"}],["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"url\":\"https://katsu1101.github.io/song-list-linca-tojou/\",\"name\":\"戸定梨香ちゃんの歌リスト\",\"description\":\"戸定梨香さんが配信で歌った最新の歌情報を更新。かわいいVTuber戸定梨香さんの歌声の魅力を堪能できるサイトです。\",\"publisher\":{\"@type\":\"Person\",\"name\":\"かつき\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":\"https://katsu1101.github.io/song-list-linca-tojou//?s={search_term_string}\",\"query-input\":\"required name=search_term_string\",\"description\":\"通常の検索。ユーザーが入力したキーワードをそのまま検索します。\"},{\"@type\":\"SearchAction\",\"target\":\"https://katsu1101.github.io/song-list-linca-tojou//?s=%23{search_term_string}\",\"query-input\":\"required name=search_term_string\",\"description\":\"タグ検索。検索クエリの先頭にURLエンコードされた'#'（%23）を付与します。\"}]}"}}]]}],["$","body",null,{"className":"__variable_b337eb __variable_ca25ba antialiased","children":["$","$2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}]}]}]]}]]}],"p":"$@5","v":null,"s":"$6"},"c":"$Q7"},"h":{"r":["$","$1","h",{"children":[null,["$","$L12",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L14",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$2",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"戸定梨香ちゃんの歌リスト"}],["$","meta","1",{"name":"description","content":"戸定梨香さんが配信で歌った最新の歌情報を更新。かわいいVTuber戸定梨香さんの歌声の魅力を堪能できるサイトです。"}],["$","meta","2",{"name":"keywords","content":"戸定梨香,VTuber,かわいい,j-pop,アニソン"}],["$","meta","3",{"property":"og:title","content":"戸定梨香ちゃんの歌リスト"}],"$L15","$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21"]}]}],null]}],"$L22"]}],"p":"$@23","v":null,"s":"$6"}},"a":"$@24","u":"$@25","b":"974Ruk86CWzoZXGyGoSis"}
+c:{}
+d:"$7:0:1:d:r:props:children:0:props:serverProvidedParams:params"
+f:null
+15:["$","meta","4",{"property":"og:description","content":"これは 歌リストアプリです"}]
+16:["$","meta","5",{"property":"og:url","content":"https://katsu1101.github.io/song-list-linca-tojou/"}]
+17:["$","meta","6",{"property":"og:image","content":"https://katsu1101.github.io/song-list-linca-tojou/linca/og-image.png"}]
+18:["$","meta","7",{"property":"og:image:width","content":"1200"}]
+19:["$","meta","8",{"property":"og:image:height","content":"630"}]
+1a:["$","meta","9",{"property":"og:image:alt","content":"OG Image"}]
+1b:["$","meta","10",{"property":"og:type","content":"website"}]
+1c:["$","meta","11",{"name":"twitter:card","content":"summary_large_image"}]
+1d:["$","meta","12",{"name":"twitter:site","content":"@katsu1101"}]
+1e:["$","meta","13",{"name":"twitter:creator","content":"@katsu1101"}]
+1f:["$","meta","14",{"name":"twitter:title","content":"戸定梨香ちゃんの歌リスト"}]
+20:["$","meta","15",{"name":"twitter:description","content":"これは 歌リストアプリです"}]
+21:["$","meta","16",{"name":"twitter:image","content":"https://katsu1101.github.io/song-list-linca-tojou/linca/og-image.png"}]
+22:["$","meta",null,{"name":"next-size-adjust","content":""}]
+6:300
+25:true
+6:C
+24:0
+5:"$undefined"
+23:"$undefined"
+10:"$undefined"
